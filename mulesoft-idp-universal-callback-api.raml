@@ -24,6 +24,13 @@ securitySchemes:
                 error?:
                   example: Invalid Client
                   type: string
+        "401":
+          body:
+            application/json:
+              properties:
+                error?:
+                  example: Invalid Client
+                  type: string
       queryParameters:
         apikey:
           description: Client Id:Client Secret then base64 encoded
