@@ -33,7 +33,7 @@ securitySchemes:
                 #[%dw 2.4 import fromBase64 from dw::core::Binaries import * from dw::core::Strings output application/java --- substringAfter(fromBase64(attributes.queryParams.apikey as String), ':')]
 
               ```
-
+        Your apikey becomes ClientId:ClientSecret 
 
 
     describedBy:
