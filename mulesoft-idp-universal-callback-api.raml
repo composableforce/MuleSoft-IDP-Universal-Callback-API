@@ -127,7 +127,28 @@ description: |
   ```
 
 
-
+  ```
+    %dw 2.0
+    output java
+    ---
+    {
+      parts: {
+        callback: {
+          content: '{"noAuthUrl": "'++ vars.callbackUrl ++'"}'
+        },
+        file: {
+          headers: {
+            "Content-Disposition": {
+              name: "file",
+              filename: vars.filenameAndExtension,
+              subtype: "form-data"
+            }
+          },
+          content: payload
+        }
+      }
+    }
+  ```
 
 
 
