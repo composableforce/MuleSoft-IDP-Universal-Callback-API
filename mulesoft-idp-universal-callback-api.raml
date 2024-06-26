@@ -37,26 +37,28 @@ securitySchemes:
             correlationId:
               example: 22e79d23-f1f8-49e4-a542-644c55548141
               type: string
-    securedBy:
-      - SecurityScheme-queryparam-apikey
     queryParameters:
       orgId:
         description: IDP Anypoint Organisation ID
         default: eca25329-9592-4ff1-9054-1b08d103b991
         example: eca25329-9592-4ff1-9054-1b08d103b991
         type: string
+        required: false
       documentActionId:
         default: d9402a9d-86d4-4797-b47e-76a00e04092d
         example: d9402a9d-86d4-4797-b47e-76a00e04092d
         type: string
+        required: false
       documentActionVersion:
         default: 1.1.0
         example: 1.1.0
         type: string
+        required: false
       msc?:
         description: Miscellaneous to save the context/keys of the origin of the doc
         example: Salesforce Case Id
         type: string
+        required: false
     body:
       application/json:
         description: |-
