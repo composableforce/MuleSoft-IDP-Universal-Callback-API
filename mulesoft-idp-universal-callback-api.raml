@@ -15,6 +15,8 @@ securitySchemes:
     description: |
     ### Adding API Key is possible sing query params
 
+    Use Client ID Enforcement policy with API Manageer
+
     describedBy:
       responses:
         "401":
@@ -31,6 +33,7 @@ securitySchemes:
                 error?:
                   example: Bad response from authorization server, or WSDL SOAP Fault error
                   type: string
+
       queryParameters:
         apikey:
           description: Client Id:Client Secret then base64 encoded
