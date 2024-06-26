@@ -89,11 +89,13 @@ securitySchemes:
         properties:
           executionId:
             type: field-executionId
+            required: true
           actionId:
             type: field-actionId
             required: false
           version:
-            type: string
+            type: field-actionVersion
+            required: false
 
 
 description: |
