@@ -104,6 +104,11 @@ description: |
   To specify the callback URL, include the `callback` field in your API call and define a JSON value with the callback URL. The following example adds a callback to the previous `curl` command example:
 
   ```
+  
+  ```
+
+
+  ```
   curl --location 'https://idp-rt.{region}.anypoint.mulesoft.com/api/v1/organizations/{orgId}/actions/{actionId}/versions/{actionVersion}/executions' \
   --header 'Authorization: Bearer {token}' \
   --form 'file=@"{pathToFile}"' \
