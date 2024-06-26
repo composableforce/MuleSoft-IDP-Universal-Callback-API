@@ -10,8 +10,11 @@ baseUriParameters:
 
 securitySchemes:
   SecurityScheme-queryparam-apikey:
+    displayName: 
     type: Pass Through
-    description: Client Id:Client Secret then base64 encoded
+    description: |
+    ### IDP Callback URLClient Id:Client Secret then base64 encoded
+
     describedBy:
       responses:
         "401":
