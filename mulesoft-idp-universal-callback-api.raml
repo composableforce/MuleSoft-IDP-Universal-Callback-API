@@ -10,7 +10,7 @@ baseUriParameters:
 
 securitySchemes:
   SecurityScheme-queryparam-apikey:
-    displayName: 🛡️ MuleSoft Connected App OAuth 2.0
+    displayName: 🛡️ MuleSoft Client ID Enforcement Policy
     type: Pass Through
     description: |
       ### Adding API Key to Query Parameters
@@ -29,6 +29,10 @@ securitySchemes:
         Client Secret Expression
         DataWeave Expression to be used to extract the Client Secret from API requests
 
+              ```
+                #[%dw 2.4 import fromBase64 from dw::core::Binaries import * from dw::core::Strings output application/java --- substringAfter(fromBase64(attributes.queryParams.apikey as String), ':')]
+
+              ```
 
 
 
