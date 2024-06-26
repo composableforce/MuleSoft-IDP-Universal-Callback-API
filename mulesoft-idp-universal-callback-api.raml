@@ -24,12 +24,12 @@ securitySchemes:
                 error?:
                   example: Invalid Client
                   type: string
-        "401":
+        "500":
           body:
             application/json:
               properties:
                 error?:
-                  example: Invalid Client
+                  example: Bad response from authorization server, or WSDL SOAP Fault error
                   type: string
       queryParameters:
         apikey:
