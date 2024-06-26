@@ -114,6 +114,28 @@ description: |
   --form 'callback="{\"noAuthUrl\":\"{callbackURL}\"}"'
   ```
 
+  field-actionId:
+    displayName: IDP Document Action Id
+    description: Published Document Action UUID
+    default: 90c3e286-72b5-42ca-92d0-22f86ea8d766
+    example: 90c3e286-72b5-42ca-92d0-22f86ea8d766
+    type: string
+    pattern: ^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$
 
+  field-actionVersion:
+    displayName: IDP Document Action Id Version
+    description: Document Action Version like 1.0.0
+    default: 1.1.0
+    example: 1.1.0
+    type: string
+    pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9A-Za-z-][0-9A-Za-z-]*))*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$
+
+  field-executionId:
+    displayName: IDP Execution Id
+    description: IDP Execution Id returned after successful submission
+    default: 022c61de-9bfc-4a94-8a9c-43c5f8ac153e
+    example: 022c61de-9bfc-4a94-8a9c-43c5f8ac153e
+    type: string
+    pattern: ^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$
 
 
