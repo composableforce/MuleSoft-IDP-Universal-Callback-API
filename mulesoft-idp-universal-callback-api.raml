@@ -13,17 +13,18 @@ securitySchemes:
     displayName: 🛡️ MuleSoft Connected App OAuth 2.0
     type: Pass Through
     description: |
-    ### Adding API Key is possible sing query params
+      ### Adding API Key is possible sing query params
 
-    Use Client ID Enforcement policy with API Manager
+        Use Client ID Enforcement policy with API Manager
 
-    Custom Expression
+        Custom Expression
 
      - Client ID Expression
         DataWeave Expression to be used to extract the Client ID from API requests
-  ```
+      ```
         #[%dw 2.4 import fromBase64 from dw::core::Binaries import * from dw::core::Strings output application/java --- substringBefore(fromBase64(attributes.queryParams.apikey as String), ':')]
-  ```
+      ```
+
     describedBy:
       responses:
         "401":
