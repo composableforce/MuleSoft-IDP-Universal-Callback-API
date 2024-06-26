@@ -103,6 +103,7 @@ description: |
 
   To specify the callback URL, include the `callback` field in your API call and define a JSON value with the callback URL. The following example adds a callback to the previous `curl` command example:
 
+    Dataweave:
   ```
     %dw 2.0
     output java
@@ -125,32 +126,6 @@ description: |
       }
     }
   ```
-
-
-  ```
-    %dw 2.0
-    output java
-    ---
-    {
-      parts: {
-        callback: {
-          content: '{"noAuthUrl": "'++ vars.callbackUrl ++'"}'
-        },
-        file: {
-          headers: {
-            "Content-Disposition": {
-              name: "file",
-              filename: vars.filenameAndExtension,
-              subtype: "form-data"
-            }
-          },
-          content: payload
-        }
-      }
-    }
-  ```
-
-
 
 
   ```
