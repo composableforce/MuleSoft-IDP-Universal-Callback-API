@@ -1,2 +1,103 @@
 #%RAML 1.0
 title: MuleSoft IDP Universal Callback API
+
+mediaType:
+  - application/json
+version: v1
+
+protocols:
+  - HTTPS
+
+securitySchemes:
+  SecurityScheme-queryparam-apikey:
+    type: Pass Through
+    description: Client Id:Client Secret then base64 encoded
+    describedBy:
+      responses:
+        "401":
+          body:
+            application/json:
+              properties:
+                error?:
+                  example: Invalid Client
+                  type: string
+      queryParameters:
+        apikey:
+          description: Client Id:Client Secret then base64 encoded
+          default: MzY2MDhlM2NkYThkNGJhYWI0Y2QyZmQ5MmQ2MGNhNWM6ODYyMzYxQjI2OGZDNGI2MUI4ODIxOTc2NTUzYzljMDU=
+          example: MzY2MDhlM2NkYThkNGJhYWI0Y2QyZmQ5MmQ2MGNhNWM6ODYyMzYxQjI2OGZDNGI2MUI4ODIxOTc2NTUzYzljMDU=
+          type: string
+/idp/callback:
+  patch:
+    displayName: IDP-Callback
+    responses:
+      "200":
+        body:
+          properties:
+            correlationId:
+              example: 22e79d23-f1f8-49e4-a542-644c55548141
+              type: string
+    securedBy:
+      - SecurityScheme-queryparam-apikey
+    queryParameters:
+      orgId:
+        description: IDP Anypoint Organisation ID
+        default: eca25329-9592-4ff1-9054-1b08d103b991
+        example: eca25329-9592-4ff1-9054-1b08d103b991
+        type: string
+      documentActionId:
+        default: d9402a9d-86d4-4797-b47e-76a00e04092d
+        example: d9402a9d-86d4-4797-b47e-76a00e04092d
+        type: string
+      documentActionVersion:
+        default: 1.1.0
+        example: 1.1.0
+        type: string
+      msc?:
+        description: Miscellaneous to save the context/keys of the origin of the doc
+        example: Salesforce Case Id
+        type: string
+    body:
+      application/json:
+        description: |-
+          NoAuthCallbackBody {
+
+              UUID executionId;
+              String actionId;
+              String version;
+          }
+        properties:
+          executionId:
+            example: 22e79d23-f1f8-49e4-a542-644c55548141
+            type: string
+          actionId:
+            example: Example
+            type: string
+          version:
+            example: Example
+            type: string
+securedBy:
+  - SecurityScheme-queryparam-apikey
+title: IDP Universal Callback
+types:
+  field-executionId:
+    example: Example
+    type: string
+
+description: |
+  ### IDP Callback URL
+
+  You can define a callback URL when you call IDP to execute your document actions. If defined, IDP calls the callback URL when the document action execution finishes.
+
+  To specify the callback URL, include the `callback` field in your API call and define a JSON value with the callback URL. The following example adds a callback to the previous `curl` command example:
+
+  ```
+  curl --location 'https://idp-rt.{region}.anypoint.mulesoft.com/api/v1/organizations/{orgId}/actions/{actionId}/versions/{actionVersion}/executions' \
+  --header 'Authorization: Bearer {token}' \
+  --form 'file=@"{pathToFile}"' \
+  --form 'callback="{\"noAuthUrl\":\"{callbackURL}\"}"'
+  ```
+
+
+
+
