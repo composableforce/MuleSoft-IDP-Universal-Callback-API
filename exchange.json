@@ -3,7 +3,7 @@
   "name": "MuleSoft IDP Universal 🌐 Callback API",
   "groupId": "eca25329-9592-4ff1-9054-1b08d103b991",
   "assetId": "mulesoft-idp-universal-callback-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "classifier": "raml",
   "tags": [],
   "descriptorVersion": "1.0.0",
