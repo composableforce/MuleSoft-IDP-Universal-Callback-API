@@ -5,6 +5,11 @@ mediaType: application/json
 protocols: HTTPS
 
 baseUri: https://{host}/api/{version}
+baseUriParameters:
+  host:
+    type: string
+    example: mulesoft-idp-universal-callback-app-uupas5.m3jzw3-1.deu-c1.cloudhub.io
+    default: mulesoft-idp-universal-callback-app-uupas5.m3jzw3-1.deu-c1.cloudhub.io
 
 securitySchemes:
   SecurityScheme-queryparam-apikey:
