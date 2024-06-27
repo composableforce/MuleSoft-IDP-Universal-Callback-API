@@ -4,10 +4,6 @@ version: v1
 mediaType: application/json
 protocols: HTTPS
 
-baseUri: https://mulesoft-idp-universal-callback-app-uupas5.m3jzw3-1.deu-c1.cloudhub.io/api/
-baseUriParameters:
-
-
 securitySchemes:
   SecurityScheme-queryparam-apikey:
     displayName: 🛡️ MuleSoft Client ID Enforcement Policy
@@ -35,7 +31,6 @@ securitySchemes:
               ```
         Your apikey becomes ClientId:ClientSecret then Base64
 
-
     describedBy:
       responses:
         "401":
@@ -57,6 +52,9 @@ securitySchemes:
         apikey:
           description: Client Id:Client Secret then base64 encoded
           type: string
+
+securedBy:
+  - 
 
 /idp/callback:
   patch:
