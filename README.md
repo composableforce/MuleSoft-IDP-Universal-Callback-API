@@ -1,6 +1,7 @@
 # MuleSoft IDP Universal 🌐 Callback API
 Break the Cycle of Polling
 
+The IDP platform supports webhooks for callbacks, allowing you to eliminate costly polling. Instead, delegate the responsibility to the IDP to notify you when an event occurs with your document submission while harnessing the robust nature of AsyncAP
 
   ###  [IDP Callback URL MuleSoft Documents](https://docs.mulesoft.com/idp/automate-document-processing-with-the-idp-api#callback-url).
 
