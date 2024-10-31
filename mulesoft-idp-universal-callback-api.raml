@@ -1,0 +1,160 @@
+#%RAML 1.0
+title: MuleSoft IDP Universal 🌐 Callback API
+version: v1
+mediaType: application/json
+protocols: HTTPS
+
+baseUri: https://{host}/api/{version}
+
+baseUriParameters:
+  host:
+    type: string
+    example: mulesoft-idp-universal-callback-app-uupas5.m3jzw3-1.deu-c1.cloudhub.io
+
+securitySchemes:
+  SecurityScheme-ClientIDEnforcement-queryparam-apikey:
+    displayName: 🛡️ MuleSoft Client ID Enforcement Policy via Query Params
+    type: Pass Through
+    description: |
+      ### Adding API Key to Query Parameters
+
+        Use Client ID Enforcement policy with API Manager
+
+        Custom Expression
+
+        Client ID Expression
+        DataWeave Expression to be used to extract the Client ID from API requests
+
+              ```
+                #[%dw 2.4 import fromBase64 from dw::core::Binaries import * from dw::core::Strings output application/java --- substringBefore(fromBase64(attributes.queryParams.apikey as String), ':')]
+
+              ```
+        Client Secret Expression
+        DataWeave Expression to be used to extract the Client Secret from API requests
+
+              ```
+                #[%dw 2.4 import fromBase64 from dw::core::Binaries import * from dw::core::Strings output application/java --- substringAfter(fromBase64(attributes.queryParams.apikey as String), ':')]
+
+              ```
+        Your apikey becomes ClientId:ClientSecret then Base64
+
+    describedBy:
+      responses:
+        "401":
+          body:
+            application/json:
+              properties:
+                error?:
+                  example: Invalid Client
+                  type: string
+        "500":
+          body:
+            application/json:
+              properties:
+                error?:
+                  example: Bad response from authorization server, or WSDL SOAP Fault error
+                  type: string
+
+      queryParameters:
+        apikey:
+          description: Client Id:Client Secret then base64 encoded
+          type: string
+
+securedBy:
+  - SecurityScheme-ClientIDEnforcement-queryparam-apikey
+
+/idp/callback:
+  patch:
+    displayName: 🤖 IDP patchCallback
+    responses:
+      "200":
+        body:
+          properties:
+            correlationId:
+              example: 22e79d23-f1f8-49e4-a542-644c55548141
+              type: string
+    queryParameters:
+      context:
+        description: Miscellaneous to save the context/keys/polymorphic of the origin of the doc
+        example: Salesforce Case Id
+        type: string
+        required: true
+    body:
+      application/json:
+        displayName: NoAuthCallbackBody
+        description: NoAuthCallbackBody
+        properties:
+          executionId:
+            type: field-executionId
+            required: true
+          actionId:
+            type: field-actionId
+            required: false
+          version:
+            type: field-actionVersion
+            required: false
+
+
+description: |
+  ###  [IDP Callback URL MuleSoft Documents](https://docs.mulesoft.com/idp/automate-document-processing-with-the-idp-api#callback-url).
+
+  You can define a callback URL when you call IDP to execute your document actions. If defined, IDP calls the callback URL when the document action execution finishes.
+
+  To specify the callback URL, include the `callback` field in your API call and define a JSON value with the callback URL. The following example adds a callback to the previous `curl` command example:
+
+    Dataweave:
+  ```
+    %dw 2.0
+    output java
+    ---
+    {
+      parts: {
+        callback: {
+          content: '{"noAuthUrl": "'++ vars.callbackUrl ++'"}'
+        },
+        file: {
+          headers: {
+            "Content-Disposition": {
+              name: "file",
+              filename: vars.filenameAndExtension,
+              subtype: "form-data"
+            }
+          },
+          content: payload
+        }
+      }
+    }
+  ```
+
+
+  ```
+  curl --location 'https://idp-rt.{region}.anypoint.mulesoft.com/api/v1/organizations/{orgId}/actions/{actionId}/versions/{actionVersion}/executions' \
+  --header 'Authorization: Bearer {token}' \
+  --form 'file=@"{pathToFile}"' \
+  --form 'callback="{\"noAuthUrl\":\"{callbackURL}\"}"'
+  ```
+
+types:
+  field-actionId:
+    displayName: IDP Document Action Id
+    description: Published Document Action UUID
+    example: 90c3e286-72b5-42ca-92d0-22f86ea8d766
+    type: string
+    pattern: ^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$
+
+  field-actionVersion:
+    displayName: IDP Document Action Id Version
+    description: Document Action Version like 1.0.0
+    example: 1.1.0
+    type: string
+    pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9A-Za-z-][0-9A-Za-z-]*))*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$
+
+  field-executionId:
+    displayName: IDP Execution Id
+    description: IDP Execution Id returned after successful submission
+    default: 022c61de-9bfc-4a94-8a9c-43c5f8ac153e
+    example: 022c61de-9bfc-4a94-8a9c-43c5f8ac153e
+    type: string
+    pattern: ^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$
+
+
